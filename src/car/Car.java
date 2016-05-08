@@ -10,17 +10,25 @@ import lejos.robotics.subsumption.Behavior;
 public class Car {
 
 	static RegulatedMotor driveMotor = MirrorMotor.invertMotor(Motor.A);
-	static IRSensor sensor;
+	static RegulatedMotor driveControlMotor = Motor.B;
+	static IRSensor irSensor;
+	static ColorSensor colorSensor;
 
 	public static void main(String[] args) {
 		driveMotor.resetTachoCount();
 		driveMotor.rotateTo(0);
 		driveMotor.setSpeed(400);
 		driveMotor.setAcceleration(800);
+		
+		driveControlMotor.rotateTo(0);
 
-		sensor = new IRSensor();
-		sensor.setDaemon(true);
-		sensor.start();
+		irSensor = new IRSensor();
+		irSensor.setDaemon(true);
+		irSensor.start();
+		
+		colorSensor = new ColorSensor();
+		colorSensor.setDaemon(true);
+		colorSensor.start();
 
 		Behavior b1 = new Drive();
 		Behavior b2 = new DetectCollision();

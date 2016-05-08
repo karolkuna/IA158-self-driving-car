@@ -11,7 +11,7 @@ class DetectCollision implements Behavior {
 	}
 
 	private boolean checkDistance() {
-		int distance = Car.sensor.getDistance();
+		int distance = Car.irSensor.getDistance();
 
 		if (distance < MIN_DISTANCE) {
 			Button.LEDPattern(2);
