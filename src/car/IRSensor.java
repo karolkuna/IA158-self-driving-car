@@ -6,7 +6,7 @@ import lejos.robotics.SampleProvider;
 
 class IRSensor extends Thread {
 	
-	private EV3IRSensor ir = new EV3IRSensor(SensorPort.S2);
+	private EV3IRSensor ir = new EV3IRSensor(SensorPort.S1);
 	private SampleProvider sp = ir.getDistanceMode();
 	private int distance = 255;
 

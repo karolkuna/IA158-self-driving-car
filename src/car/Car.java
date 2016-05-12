@@ -11,17 +11,24 @@ public class Car {
 
 	static RegulatedMotor driveMotor = MirrorMotor.invertMotor(Motor.A);
 	static RegulatedMotor driveControlMotor = Motor.B;
+	static RegulatedMotor sensorBaseMotor = Motor.C;
 	static IRSensor irSensor;
 	static ColorSensor colorSensor;
+	
+	static int defaultAcceleration = 40;
 
 	public static void main(String[] args) {
 		driveMotor.resetTachoCount();
 		driveMotor.rotateTo(0);
-		driveMotor.setSpeed(400);
-		driveMotor.setAcceleration(800);
+		driveMotor.setSpeed(200);
+		driveMotor.setAcceleration(defaultAcceleration);
 		
+		driveControlMotor.setAcceleration(200);
 		driveControlMotor.rotateTo(0);
 
+		sensorBaseMotor.rotateTo(0);
+		sensorBaseMotor.setAcceleration(1000);
+		
 		irSensor = new IRSensor();
 		irSensor.setDaemon(true);
 		irSensor.start();
@@ -31,7 +38,7 @@ public class Car {
 		colorSensor.start();
 
 		Behavior b1 = new Drive();
-		Behavior b2 = new DetectCollision();
+		Behavior b2 = new AvoidCollision();
 
 		Behavior[] behaviorList = { b1, b2 };
 
