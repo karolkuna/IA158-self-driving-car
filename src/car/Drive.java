@@ -27,29 +27,31 @@ class Drive implements Behavior {
 		
 		Car.driveMotor.forward();
 		
-		while (!suppressed) {		
+		while (!suppressed) {
+			// move sensor base from left to right (-60 to 60 degrees)
 			if (forward && Car.sensorBaseMotor.getTachoCount() > 60) {
 				forward = false;
 			} else if (!forward && Car.sensorBaseMotor.getTachoCount() < -60){
 				forward = true;
 			}
 			
+			// precision of motors is 2 degrees, rotate target with 3 degrees margin to make sure it overshoots  
 			if (forward) {
 				Car.sensorBaseMotor.rotateTo(63, true);
 			} else {
 				Car.sensorBaseMotor.rotateTo(-63, true);
 			}
 			
-			// drive
-			
-			float angle = Car.colorSensor.lineAngle;
-			// rotating base is not exactly in the center, so the angle needs to be compensated for that
+			// line following
+			float angle = Car.colorSensor.lineAngle; // line angle estimate from rotating color sensor
+			// rotating base is not exactly in the center, so the angle needs to be compensated
 			if (angle < 0) {
-				angle = angle * 0.69f; // it could be calculated precisely, but this is good enough
+				angle = angle * 0.69f; // it could be calculated more precisely, but this is good enough
 			}
 			
+			// get corrective angle of wheels from PID controller
 			float targetAngle = pid.control(Car.colorSensor.lineAngle);
-			targetAngle = Math.min(70, Math.max(targetAngle, -70));
+			targetAngle = Math.min(70, Math.max(targetAngle, -70)); // limit it to -70 to 70 deg 
 			
 			//Car.driveControlMotor.rotate((int)targetAngle, true);
 			Car.driveControlMotor.rotateTo((int)targetAngle, true);

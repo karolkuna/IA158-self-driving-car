@@ -40,7 +40,7 @@ public class Car {
 		Behavior b1 = new Drive();
 		Behavior b2 = new AvoidCollision();
 
-		Behavior[] behaviorList = { b1, b2 };
+		Behavior[] behaviorList = { b1, b2 }; // priority in increasing order 
 
 		Arbitrator arbitrator = new Arbitrator(behaviorList);
 

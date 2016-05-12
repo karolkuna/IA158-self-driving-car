@@ -7,10 +7,10 @@ class PIDController {
 	private float prev = 0f;
 	private float integral = 0f;
 	
-	public PIDController(float kp, float kd, float ki) {
-		m_kp = kp;
-		m_ki = ki;
-		m_kd = kd;
+	public PIDController(float kp, float ki, float kd) {
+		m_kp = kp; // proportional gain
+		m_ki = ki; // integral gain
+		m_kd = kd; // derivative gain
 	}
 	
 	public float control(float error) {

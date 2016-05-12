@@ -37,7 +37,7 @@ class AvoidCollision implements Behavior {
 	public void action() {
 		suppressed = false;
 		
-		Car.driveMotor.setAcceleration(400);
+		Car.driveMotor.setAcceleration(400); // quicker braking
 		Car.driveMotor.stop();
 		
 	}
